@@ -6,4 +6,6 @@ export class StampService {
   constructor(private readonly stampRepository: StampRepository) {}
 
   async getStampList() {}
+
+  async saveStamp() {}
 }

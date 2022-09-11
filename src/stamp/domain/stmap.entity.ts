@@ -1,5 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { User } from 'src/auth/domain/user.entity'
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm'
 
 @Entity({ name: 'tbl_stamp' })
 export class Stamp extends BaseEntity {
@@ -30,4 +37,7 @@ export class Stamp extends BaseEntity {
   @Column()
   @ApiProperty({ description: 'stamp_six' })
   stampSix: boolean
+
+  @ManyToOne((type) => User, (user) => user.stamp)
+  user: User
 }

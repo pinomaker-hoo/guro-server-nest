@@ -1,6 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { BaseTimeEntity } from 'src/common/baseTime.entity'
-import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm'
+import { Stamp } from 'src/stamp/domain/Stmap.entity'
+import {
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  Unique,
+} from 'typeorm'
 
 @Entity({ name: 'tbl_user' })
 @Unique(['naverId'])
@@ -20,4 +27,7 @@ export class User extends BaseTimeEntity {
   @Column({ type: 'varchar', length: 255 })
   @ApiProperty({ description: 'user_naverId' })
   naverId: string
+
+  @OneToMany((type) => Stamp, (stamp) => stamp.user)
+  stamp: Stamp[]
 }
