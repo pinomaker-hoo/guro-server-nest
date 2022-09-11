@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common'
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
+import { StampService } from 'src/stamp/application/stamp.service'
 import { User } from '../domain/user.entity'
 import { Payload } from '../dto/Req.payload.dto'
 import { UserRepository } from '../infrastructure/auth.repository'
@@ -9,6 +10,7 @@ export class AuthService {
   constructor(
     private readonly userRepositoy: UserRepository,
     private readonly jwtService: JwtService,
+    private readonly stampService: StampService,
   ) {}
 
   async naverSave(req: Payload): Promise<User> {
@@ -29,6 +31,8 @@ export class AuthService {
     const findUser = await this.checkLogined(req.naverId)
     if (findUser) return findUser
     const makeUser = await this.naverSave(req)
+    const stamp = await this.stampService.newUserMakeStamp(makeUser.idx)
+    if (!stamp) new HttpException('Error', HttpStatus.BAD_REQUEST)
     return await this.getJwtWithNaverId(makeUser.naverId)
   }
 
