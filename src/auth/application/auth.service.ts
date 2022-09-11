@@ -1,33 +1,45 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
-import { CreateUserDto } from '../dto/user.create.dto'
-import { UserRepository } from '../infrastructure/auth.repository'
-import * as bcrypt from 'bcryptjs'
+import { Injectable } from '@nestjs/common'
+import { JwtService } from '@nestjs/jwt'
 import { User } from '../domain/user.entity'
+import { Payload } from '../dto/Req.payload.dto'
+import { UserRepository } from '../infrastructure/auth.repository'
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly userRepositoy: UserRepository) {}
-  async save(req: CreateUserDto): Promise<User> {
-    const hash = await bcrypt.hash(req.password, 10)
+  constructor(
+    private readonly userRepositoy: UserRepository,
+    private readonly jwtService: JwtService,
+  ) {}
+
+  async naverSave(req: Payload): Promise<User> {
     const user = this.userRepositoy.create({
       name: req.name,
-      password: hash,
+      nummber: '123',
+      naverId: req.naverId,
     })
     return await this.userRepositoy.save(user)
   }
 
-  async login(name: string, password: string): Promise<User> {
-    try {
-      const user = await this.userRepositoy.findOne({ where: { name: name } })
-      await this.compareBcrypt(password, user.password)
-      return user
-    } catch (err) {
-      throw new HttpException('EROR ACCOUT', HttpStatus.BAD_REQUEST)
-    }
+  /**
+   * Payload를 받아서 User가 있으면 찾아서, 없으면 생성, 저장 후 반환
+   * @param req
+   * @returns {User}
+   */
+  async login(req: Payload) {
+    const findUser = await this.checkLogined(req.naverId)
+    if (findUser) return findUser
+    const makeUser = await this.naverSave(req)
+    return await this.getJwtWithNaverId(makeUser.naverId)
   }
 
-  async compareBcrypt(pw: string, hash: string) {
-    const result = await bcrypt.compare(pw, hash)
-    if (!result) throw new HttpException('PW ERROR', HttpStatus.BAD_REQUEST)
+  async getJwtWithNaverId(naverId: string) {
+    const payload = { naverId }
+    const token = this.jwtService.sign(payload)
+    return `Authentication=${token}; HttpOnly; Path=/; Max-Age=3600`
+  }
+
+  async checkLogined(naverId: string) {
+    const user = await this.userRepositoy.findOne({ where: { naverId } })
+    return user ? user : false
   }
 }

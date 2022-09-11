@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { PassportStrategy } from '@nestjs/passport'
-import { Strategy } from 'passport-naver'
+import { Strategy } from 'passport-jwt'
 import { AuthService } from '../application/auth.service'
 import { Payload } from '../dto/Req.payload.dto'
 
@@ -14,10 +14,14 @@ export class NaverStrategy extends PassportStrategy(Strategy) {
     })
   }
   async validate(accessToken, refreshToken, profile, done) {
-    const payload: Payload = {
-      number: profile.number,
-      name: profile.emails[0].value,
-      naverId: profile.id,
+    console.log(profile)
+    const payload = {
+      user: {
+        number: profile.number,
+        name: profile.emails[0].value,
+        naverId: profile.id,
+      },
+      accessToken: accessToken,
     }
     done(null, payload)
   }

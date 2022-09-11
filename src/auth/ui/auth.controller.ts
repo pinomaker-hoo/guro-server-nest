@@ -1,23 +1,41 @@
-import { Controller, Post, Req, Res, UseGuards } from '@nestjs/common'
-import { throws } from 'assert'
+import {
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Post,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common'
+import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { AuthService } from '../application/auth.service'
 import { User } from '../domain/user.entity'
-import ReqWithUser from '../dto/passport.req.dto'
-import { CreateUserDto } from '../dto/user.create.dto'
+import { NaverGuard } from '../passport/auth.naver.guard'
 
 @Controller('auth')
+@ApiTags('유저 API')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post()
-  async save(req: CreateUserDto): Promise<User> {
-    return this.authService.save(req)
+  @Get('/naver')
+  @HttpCode(200)
+  @ApiOperation({ summary: '유저 생성 API', description: '유저를 생성한다.' })
+  @ApiCreatedResponse({ description: '유저를 생성한다.', type: User })
+  @UseGuards(NaverGuard)
+  async naverLogin() {
+    return HttpStatus.OK
   }
 
-  @UseGuards()
-  @Post('/login')
-  async login(@Req() req: ReqWithUser, @Res() res) {
-    const { user } = req
-    return res.json(user)
+  @Get('/naver/callback')
+  @HttpCode(200)
+  @UseGuards(NaverGuard)
+  async naverLoginCallback(@Req() req, @Res() res) {
+    const token = await this.authService.login(req.user)
+    res.cookie('accessToken', token, {
+      httpOnly: true,
+      maxAge: 24 * 60 * 60,
+    })
+    res.redirect('http://localhost:3000/main')
   }
 }
