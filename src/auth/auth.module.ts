@@ -5,15 +5,17 @@ import { PassportModule } from '@nestjs/passport'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { StampService } from 'src/stamp/application/stamp.service'
 import { StampRepository } from 'src/stamp/infrastructure/stamp.repository'
+import { StampModule } from 'src/stamp/stamp.module'
 import { AuthService } from './application/auth.service'
 import { UserRepository } from './infrastructure/auth.repository'
+import { JwtStrategy } from './passport/auth.jwt.strategy'
 import { NaverStrategy } from './passport/auth.naver.strategy'
 import { AuthController } from './ui/auth.controller'
 
 @Module({
   imports: [
     PassportModule,
-    TypeOrmModule.forFeature([UserRepository]),
+    TypeOrmModule.forFeature([UserRepository, StampRepository]),
     ConfigModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
@@ -26,7 +28,7 @@ import { AuthController } from './ui/auth.controller'
       }),
     }),
   ],
-  providers: [AuthService, NaverStrategy, StampService, StampRepository],
+  providers: [AuthService, NaverStrategy, StampService],
   controllers: [AuthController],
 })
 export class AuthModule {}

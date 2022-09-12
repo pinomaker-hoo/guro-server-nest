@@ -6,9 +6,11 @@ import {
   Entity,
   ManyToOne,
   PrimaryGeneratedColumn,
+  Unique,
 } from 'typeorm'
 
 @Entity({ name: 'tbl_stamp' })
+@Unique(['user'])
 export class Stamp extends BaseEntity {
   @PrimaryGeneratedColumn()
   @ApiProperty({ description: 'stamp_idx' })

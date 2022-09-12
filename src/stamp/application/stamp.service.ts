@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { UserRepository } from 'src/auth/infrastructure/auth.repository'
+import { Stamp } from '../domain/Stmap.entity'
 import { StampRepository } from '../infrastructure/stamp.repository'
 
 @Injectable()
@@ -9,29 +10,56 @@ export class StampService {
     private readonly userRepository: UserRepository,
   ) {}
 
+  /** userIdx를 이용한 Stamp List 조회 */
   async getStampList(userIdx: number) {
-    const user = await this.findByUserIdx(userIdx)
+    const user = await this.findUserByUserIdx(userIdx)
     return await this.stampRepository.find({ user: user })
   }
 
-  async saveStamp() {}
-
+  /** 회원가입 시 기본 도장 생성 */
   async newUserMakeStamp(userIdx: number) {
-    const user = await this.findByUserIdx(userIdx)
-    console.log(user)
+    const user = await this.findUserByUserIdx(userIdx)
     const stamp = this.stampRepository.create({
-      user: user,
       stampOne: false,
       stampTwo: false,
       stampThree: false,
       stampFour: false,
       stampFive: false,
       stampSix: false,
+      user: user,
     })
     return await this.stampRepository.save(stamp)
   }
 
-  async findByUserIdx(userIdx: number) {
+  /** userIdx를 이용한 User 조회 */
+  async findUserByUserIdx(userIdx: number) {
     return await this.userRepository.findOne({ idx: userIdx })
+  }
+
+  /** userIdx와 stampIdx를 이용한 Stamp 조회 */
+  async updateStamp(userIdx: number, stampIdx: number) {
+    const stamp = await this.getStampList(userIdx)
+    console.log(stamp)
+    switch (stampIdx) {
+      case 1:
+        break
+
+      case 2:
+        break
+
+      case 3:
+        break
+
+      case 4:
+        break
+      case 5:
+        break
+
+      case 6:
+        break
+
+      default:
+        break
+    }
   }
 }

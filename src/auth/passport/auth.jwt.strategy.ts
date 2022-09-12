@@ -1,28 +1,27 @@
-import { Injectable } from '@nestjs/common'
+import { ExtractJwt, Strategy } from 'passport-jwt'
 import { PassportStrategy } from '@nestjs/passport'
-import { Strategy } from 'passport-jwt'
+import { Injectable } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
+import { Request } from 'express'
 import { AuthService } from '../application/auth.service'
-import { Payload } from '../dto/Req.payload.dto'
 
 @Injectable()
-export class NaverStrategy extends PassportStrategy(Strategy) {
-  constructor(private readonly authService: AuthService) {
+export class JwtStrategy extends PassportStrategy(Strategy) {
+  constructor(
+    private readonly configService: ConfigService,
+    private readonly authService: AuthService,
+  ) {
     super({
-      clientID: 'vW2cEuaxm94WBYA9lAcY',
-      clientSecret: 'Op_nPVRVZv',
-      callbackURL: 'http://localhost:3001/auth/naver/callback',
+      jwtFromRequest: ExtractJwt.fromExtractors([
+        (request: Request) => {
+          return request?.cookies?.Authentication
+        },
+      ]),
+      secretOrKey: 'guroguro',
     })
   }
-  async validate(accessToken, refreshToken, profile, done) {
-    console.log(profile)
-    const payload = {
-      user: {
-        number: profile.number,
-        name: profile.emails[0].value,
-        naverId: profile.id,
-      },
-      accessToken: accessToken,
-    }
-    done(null, payload)
+  async validate(payload: number) {
+    console.log(typeof payload)
+    return this.authService.getById(payload)
   }
 }
