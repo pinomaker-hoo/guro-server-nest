@@ -1,6 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { UserRepository } from 'src/auth/infrastructure/auth.repository'
-import { Stamp } from '../domain/Stmap.entity'
 import { StampRepository } from '../infrastructure/stamp.repository'
 
 @Injectable()

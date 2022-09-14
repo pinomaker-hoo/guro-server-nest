@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { BaseTimeEntity } from 'src/common/baseTime.entity'
-import { Stamp } from 'src/stamp/domain/Stmap.entity'
+import { Stamp } from '../../stamp/domain/stmap.entity'
 import {
   Column,
   Entity,
