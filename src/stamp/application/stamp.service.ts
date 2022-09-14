@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { UserRepository } from 'src/auth/infrastructure/auth.repository'
 import { Stamp } from '../domain/Stmap.entity'
 import { StampRepository } from '../infrastructure/stamp.repository'
@@ -12,28 +12,40 @@ export class StampService {
 
   /** userIdx를 이용한 Stamp List 조회 */
   async getStampList(userIdx: number) {
-    const user = await this.findUserByUserIdx(userIdx)
-    return await this.stampRepository.find({ user: user })
+    try {
+      const user = await this.findUserByUserIdx(userIdx)
+      return await this.stampRepository.find({ user: user })
+    } catch (err) {
+      new HttpException('Error', HttpStatus.BAD_REQUEST)
+    }
   }
 
   /** 회원가입 시 기본 도장 생성 */
   async newUserMakeStamp(userIdx: number) {
-    const user = await this.findUserByUserIdx(userIdx)
-    const stamp = this.stampRepository.create({
-      stampOne: false,
-      stampTwo: false,
-      stampThree: false,
-      stampFour: false,
-      stampFive: false,
-      stampSix: false,
-      user: user,
-    })
-    return await this.stampRepository.save(stamp)
+    try {
+      const user = await this.findUserByUserIdx(userIdx)
+      const stamp = this.stampRepository.create({
+        stampOne: false,
+        stampTwo: false,
+        stampThree: false,
+        stampFour: false,
+        stampFive: false,
+        stampSix: false,
+        user: user,
+      })
+      return await this.stampRepository.save(stamp)
+    } catch (err) {
+      new HttpException('Error', HttpStatus.BAD_REQUEST)
+    }
   }
 
   /** userIdx를 이용한 User 조회 */
   async findUserByUserIdx(userIdx: number) {
-    return await this.userRepository.findOne({ idx: userIdx })
+    try {
+      return await this.userRepository.findOne({ idx: userIdx })
+    } catch (err) {
+      new HttpException('Error', HttpStatus.BAD_REQUEST)
+    }
   }
 
   /** userIdx와 stampIdx를 이용한 Stamp 조회 */

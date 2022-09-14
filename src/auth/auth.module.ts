@@ -9,7 +9,7 @@ import { StampModule } from 'src/stamp/stamp.module'
 import { AuthService } from './application/auth.service'
 import { UserRepository } from './infrastructure/auth.repository'
 import { JwtStrategy } from './passport/auth.jwt.strategy'
-import { NaverStrategy } from './passport/auth.naver.strategy'
+import { KakaoStrategy } from './passport/auth.kakao.strategy'
 import { AuthController } from './ui/auth.controller'
 
 @Module({
@@ -28,7 +28,7 @@ import { AuthController } from './ui/auth.controller'
       }),
     }),
   ],
-  providers: [AuthService, NaverStrategy, StampService],
+  providers: [AuthService, KakaoStrategy, StampService],
   controllers: [AuthController],
 })
 export class AuthModule {}
