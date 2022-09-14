@@ -18,6 +18,11 @@ import { KakaoGuard } from '../passport/auth.kakao.guard'
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Get()
+  async checkServer() {
+    return 'SERVER ON!'
+  }
+
   @Get('/kakao')
   @HttpCode(200)
   @ApiOperation({ summary: '유저 생성 API', description: '유저를 생성한다.' })
