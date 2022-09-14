@@ -10,6 +10,7 @@ export class KakaoStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(accessToken, refreshToken, profile, done) {
+    console.log(33)
     const profileJson = profile._json
     const kakao_account = profileJson.kakao_account
     const payload = {

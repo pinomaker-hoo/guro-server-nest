@@ -11,7 +11,6 @@ import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Response } from 'express'
 import { AuthService } from '../application/auth.service'
 import { User } from '../domain/user.entity'
-import { KakaoDto } from '../dto/Kakao.dto'
 import { KakaoGuard } from '../passport/auth.kakao.guard'
 
 @Controller('auth')
@@ -25,6 +24,7 @@ export class AuthController {
   @ApiCreatedResponse({ description: '유저를 생성한다.', type: User })
   @UseGuards(KakaoGuard)
   async kakaoLogin() {
+    console.log(1)
     return HttpStatus.OK
   }
 
@@ -35,11 +35,14 @@ export class AuthController {
     @Req() req,
     @Res({ passthrough: true }) response: Response,
   ) {
+    console.log('success')
     const token = await this.authService.login(req.user)
     response.header('Access-Control-Allow-Origin', '*')
     response.set('Authorization', 'Bearer ' + token)
     response.cookie('accessToken', token, {
       maxAge: 24 * 60 * 60,
+      sameSite: 'none',
+      httpOnly: true,
     })
     response.redirect('http://127.0.0.1:5173')
   }

@@ -30,9 +30,4 @@ export class StampController {
     @Body(new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }))
     idx: number,
   ) {}
-
-  @Get('/test')
-  async test() {
-    return await this.stampService.newUserMakeStamp(9)
-  }
 }
