@@ -19,7 +19,6 @@ export class AuthService {
     if (findUser) return await this.getJwtWithKakaoId(findUser.kakaoId)
     const makeUser = await this.kakaoSave(req)
     const stamp = await this.stampService.newUserMakeStamp(makeUser.idx)
-    if (!stamp) new HttpException('Error', HttpStatus.BAD_REQUEST)
     return await this.getJwtWithKakaoId(makeUser.kakaoId)
   }
 
