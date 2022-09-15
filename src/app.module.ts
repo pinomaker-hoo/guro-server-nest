@@ -4,9 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { AuthModule } from './auth/auth.module'
 import { typeORMConfig } from './config/typeorm.config'
 import { StampModule } from './stamp/stamp.module'
-import { EventController } from './event/ui/event.controller'
-import { EventService } from './event/application/event.service'
-import { EventModule } from './event/event.module'
+import { FormModule } from './form/form.module';
 
 @Module({
   imports: [
@@ -16,7 +14,7 @@ import { EventModule } from './event/event.module'
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    EventModule,
+    FormModule,
   ],
   controllers: [],
   providers: [],

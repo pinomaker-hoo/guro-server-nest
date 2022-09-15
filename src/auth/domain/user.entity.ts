@@ -5,10 +5,11 @@ import {
   Column,
   Entity,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm'
-import { Event } from 'src/event/domain/Event.entity'
+import { Form } from 'src/form/domainn/form.entity'
 
 @Entity({ name: 'tbl_user' })
 @Unique(['kakaoId', 'email'])
@@ -36,6 +37,6 @@ export class User extends BaseTimeEntity {
   @OneToMany((type) => Stamp, (stamp) => stamp.user)
   stamp: Stamp[]
 
-  @OneToMany((type) => Event, (event) => event.user)
-  event: Event[]
+  @OneToOne((type) => Form, (form) => form.user)
+  form: Form
 }

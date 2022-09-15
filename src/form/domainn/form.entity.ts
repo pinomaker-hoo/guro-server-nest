@@ -1,9 +1,9 @@
 import { User } from 'src/auth/domain/user.entity'
 import { BaseTimeEntity } from 'src/common/baseTime.entity'
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
 
-@Entity({ name: 'tbl_event' })
-export class Event extends BaseTimeEntity {
+@Entity({ name: 'tbl_form' })
+export class Form extends BaseTimeEntity {
   @PrimaryGeneratedColumn()
   idx: number
 
@@ -13,6 +13,6 @@ export class Event extends BaseTimeEntity {
   @Column()
   number: string
 
-  @ManyToOne((type) => User, (user) => user.event)
+  @OneToOne((type) => User, (user) => user.form)
   user: User
 }
