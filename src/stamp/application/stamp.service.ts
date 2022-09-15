@@ -52,7 +52,6 @@ export class StampService {
   async updateStamp(userIdx: number, stampIdx: number) {
     try {
       const stamp: Stamp = await this.getStampList(userIdx)
-
       switch (stampIdx) {
         case 1:
           return (

@@ -31,7 +31,11 @@ export class AuthController {
   @Get('/kakao')
   @HttpCode(200)
   @UseGuards(KakaoGuard)
-  @ApiOperation({ summary: '유저 생성 API', description: '유저를 생성한다.' })
+  @ApiOperation({
+    summary: '유저 생성 API',
+    description:
+      '프론트에서는 a 태그를 이용하여 해당 API에 요청 보내면 로그인 처리 후, 토큰을 담아 localhost:3000으로 리다이렉트',
+  })
   @ApiCreatedResponse({ description: '유저를 생성한다.', type: User })
   async kakaoLogin() {
     return HttpStatus.OK
