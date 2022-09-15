@@ -29,7 +29,6 @@ export class AuthController {
   @ApiCreatedResponse({ description: '유저를 생성한다.', type: User })
   @UseGuards(KakaoGuard)
   async kakaoLogin() {
-    console.log(1)
     return HttpStatus.OK
   }
 
@@ -40,15 +39,13 @@ export class AuthController {
     @Req() req,
     @Res({ passthrough: true }) response: Response,
   ) {
-    console.log('success')
     const token = await this.authService.login(req.user)
     response.header('Access-Control-Allow-Origin', '*')
     response.set('Authorization', 'Bearer ' + token)
     response.cookie('accessToken', token, {
       maxAge: 24 * 60 * 60,
-      sameSite: 'none',
-      httpOnly: true,
+      sameSite: 'lax',
     })
-    response.redirect('http://127.0.0.1:5173')
+    response.redirect('http://localhost:5173')
   }
 }

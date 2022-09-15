@@ -16,10 +16,10 @@ export class AuthService {
   /** KakaoDto 받아서 User가 있으면 찾아서, 없으면 생성, 저장 후 반환 */
   async login(req: KakaoDto) {
     const findUser = await this.checkLogined(req.kakaoId)
-    if (findUser) return await this.getJwtWithKakaoId(findUser.kakaoId)
+    if (findUser) return await this.getJwtWithKakaoId(findUser.idx)
     const makeUser = await this.kakaoSave(req)
     const stamp = await this.stampService.newUserMakeStamp(makeUser.idx)
-    return await this.getJwtWithKakaoId(makeUser.kakaoId)
+    return await this.getJwtWithKakaoId(makeUser.idx)
   }
 
   /** User가 있는 지 확인 */
@@ -48,15 +48,17 @@ export class AuthService {
   }
 
   /** JWT 생성 */
-  async getJwtWithKakaoId(kakaoId: string) {
+  async getJwtWithKakaoId(kakaoId: number) {
     const payload = { kakaoId }
     return this.jwtService.sign(payload)
   }
 
   /** JWT를 이용한 User 찾기. */
-  async getById(idx: number) {
-    const user = await this.userRepositoy.findOne({ where: { idx } })
-    if (!user) new HttpException('Not Found', HttpStatus.NOT_FOUND)
-    return user
+  async getById(idx: string) {
+    try {
+      return await this.userRepositoy.findOne({ where: { idx } })
+    } catch (err) {
+      new HttpException('Not Found', HttpStatus.NOT_FOUND)
+    }
   }
 }

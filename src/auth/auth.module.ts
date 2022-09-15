@@ -23,7 +23,7 @@ import { AuthController } from './ui/auth.controller'
       useFactory: async (configService: ConfigService) => ({
         secret: 'guroguro',
         signOptions: {
-          expiresIn: '3600',
+          expiresIn: '3600s',
         },
       }),
     }),
