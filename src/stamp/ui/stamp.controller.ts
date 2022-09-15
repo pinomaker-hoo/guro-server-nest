@@ -6,6 +6,7 @@ import {
   Param,
   ParseIntPipe,
   Patch,
+  Req,
   UseGuards,
 } from '@nestjs/common'
 import { JwtGuard } from 'src/auth/passport/auth.jwt.guard'
@@ -17,17 +18,13 @@ export class StampController {
 
   @Get()
   @UseGuards(JwtGuard)
-  async getStampList(
-    @Body(new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }))
-    idx: number,
-  ) {
-    return await this.stampService.getStampList(idx)
+  async getStampList(@Body() post, @Req() req) {
+    return await this.stampService.getStampList(req.user.idx)
   }
 
-  @Patch('/:id')
+  @Get('/:idx')
   @UseGuards(JwtGuard)
-  async addStamp(
-    @Body(new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }))
-    idx: number,
-  ) {}
+  async addStamp(@Param('idx') idx, @Req() req) {
+    return await this.stampService.updateStamp(req.user.idx, Number(idx))
+  }
 }

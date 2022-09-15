@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { UserRepository } from 'src/auth/infrastructure/auth.repository'
+import { Stamp } from '../domain/stmap.entity'
 import { StampRepository } from '../infrastructure/stamp.repository'
 
 @Injectable()
@@ -13,7 +14,7 @@ export class StampService {
   async getStampList(userIdx: number) {
     try {
       const user = await this.findUserByUserIdx(userIdx)
-      return await this.stampRepository.find({ user: user })
+      return await this.stampRepository.findOne({ user: user })
     } catch (err) {
       new HttpException('Error', HttpStatus.BAD_REQUEST)
     }
@@ -47,30 +48,47 @@ export class StampService {
     }
   }
 
-  /** userIdx와 stampIdx를 이용한 Stamp 조회 */
+  /** userIdx와 stampIdx를 이용한 Stamp 수정 */
   async updateStamp(userIdx: number, stampIdx: number) {
-    const stamp = await this.getStampList(userIdx)
-    console.log(stamp)
-    switch (stampIdx) {
-      case 1:
-        break
+    try {
+      const stamp: Stamp = await this.getStampList(userIdx)
 
-      case 2:
-        break
-
-      case 3:
-        break
-
-      case 4:
-        break
-      case 5:
-        break
-
-      case 6:
-        break
-
-      default:
-        break
+      switch (stampIdx) {
+        case 1:
+          return (
+            stamp.stampOne === false &&
+            (await this.stampRepository.update(stamp.idx, { stampOne: true }))
+          )
+        case 2:
+          return (
+            stamp.stampTwo === false &&
+            (await this.stampRepository.update(stamp.idx, {
+              stampTwo: true,
+            }))
+          )
+        case 3:
+          return (
+            stamp.stampThree === false &&
+            (await this.stampRepository.update(stamp.idx, { stampThree: true }))
+          )
+        case 4:
+          return (
+            stamp.stampFour === false &&
+            (await this.stampRepository.update(stamp.idx, { stampFour: true }))
+          )
+        case 5:
+          return (
+            stamp.stampFive === false &&
+            (await this.stampRepository.update(stamp.idx, { stampFive: true }))
+          )
+        case 6:
+          return (
+            stamp.stampSix === false &&
+            (await this.stampRepository.update(stamp.idx, { stampSix: true }))
+          )
+      }
+    } catch (err) {
+      throw new HttpException('BAD REQUEST', HttpStatus.BAD_REQUEST)
     }
   }
 }
