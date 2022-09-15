@@ -62,6 +62,6 @@ export class AuthController {
       maxAge: 24 * 60 * 60,
       sameSite: 'lax',
     })
-    response.redirect('http://localhost:5173')
+    response.redirect('http://localhost:3000')
   }
 }
