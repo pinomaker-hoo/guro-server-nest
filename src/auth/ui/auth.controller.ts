@@ -18,16 +18,21 @@ import { KakaoGuard } from '../passport/auth.kakao.guard'
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Get()
+  @Get('check')
+  @ApiOperation({
+    summary: '서버 체크 API',
+    description: '서버가 열려있는 지 확인하는 API',
+  })
+  @ApiCreatedResponse({ description: 'SERVER ON!' })
   async checkServer() {
     return 'SERVER ON!'
   }
 
   @Get('/kakao')
   @HttpCode(200)
+  @UseGuards(KakaoGuard)
   @ApiOperation({ summary: '유저 생성 API', description: '유저를 생성한다.' })
   @ApiCreatedResponse({ description: '유저를 생성한다.', type: User })
-  @UseGuards(KakaoGuard)
   async kakaoLogin() {
     return HttpStatus.OK
   }
@@ -35,6 +40,13 @@ export class AuthController {
   @Get('/kakao/callback')
   @HttpCode(200)
   @UseGuards(KakaoGuard)
+  @ApiOperation({
+    summary: '카카오 정보 추출 API',
+    description: '서버에서 요청하는 API, 클라는 사용 X',
+  })
+  @ApiCreatedResponse({
+    description: '유저 IDX로 만든 JWT를 쿠키에 담아 메인창으로 Redirect함.',
+  })
   async kakaoLoginCallback(
     @Req() req,
     @Res({ passthrough: true }) response: Response,
