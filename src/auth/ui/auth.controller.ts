@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common'
 import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Response } from 'express'
+import { ApiResponse } from 'src/common/response'
 import { AuthService } from '../application/auth.service'
 import { User } from '../domain/user.entity'
 import { KakaoGuard } from '../passport/auth.kakao.guard'
@@ -59,7 +60,7 @@ export class AuthController {
     response.header('Access-Control-Allow-Origin', '*')
     response.set('Authorization', 'Bearer ' + token)
     response.cookie('accessToken', token, {
-      maxAge: 24 * 60 * 60,
+      expires: new Date(Date.now() + 86400e3),
       sameSite: 'lax',
     })
     response.redirect('http://localhost:3000')
