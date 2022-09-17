@@ -52,17 +52,12 @@ export class AuthController {
   @ApiCreatedResponse({
     description: '유저 IDX로 만든 JWT를 쿠키에 담아 메인창으로 Redirect함.',
   })
-  async kakaoLoginCallback(
-    @Req() req,
-    @Res({ passthrough: true }) response: Response,
-  ) {
+  async kakaoLoginCallback(@Req() req, @Res() response: Response) {
     const token = await this.authService.login(req.user)
-    response.header('Access-Control-Allow-Origin', '*')
-    response.set('Authorization', 'Bearer ' + token)
     response.cookie('accessToken', token, {
       expires: new Date(Date.now() + 86400e3),
       sameSite: 'lax',
     })
-    response.redirect('http://127.0.0.1:3000')
+    response.redirect('http://localhost:3000')
   }
 }
