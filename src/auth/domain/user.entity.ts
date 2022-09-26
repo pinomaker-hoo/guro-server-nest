@@ -1,10 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { BaseTimeEntity } from 'src/common/baseTime.entity'
+import { StampUser } from 'src/stampUser/domain/stampUser.entity'
 import {
   Column,
   Entity,
   OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm'
@@ -32,9 +32,6 @@ export class User extends BaseTimeEntity {
   @ApiProperty({ description: 'user_email' })
   email: string
 
-  // @OneToMany((type) => StampUser, (stampUser) => stampUser.user)
-  // stampUser: StampUser[]
-
-  // @OneToOne((type) => Form, (form) => form.user)
-  // form: Form
+  @OneToMany((type) => StampUser, (stampUser) => stampUser.user)
+  stampUser: StampUser[]
 }
