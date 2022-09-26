@@ -1,6 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
-import { StampService } from 'src/stamp/application/stamp.service'
 import { User } from '../domain/user.entity'
 import { KakaoDto } from '../dto/Kakao.dto'
 import { UserRepository } from '../infrastructure/auth.repository'
@@ -10,7 +9,6 @@ export class AuthService {
   constructor(
     private readonly userRepositoy: UserRepository,
     private readonly jwtService: JwtService,
-    private readonly stampService: StampService,
   ) {}
 
   /** KakaoDto 받아서 User가 있으면 찾아서, 없으면 생성, 저장 후 반환 */
@@ -18,7 +16,6 @@ export class AuthService {
     const findUser = await this.checkLogined(req.kakaoId)
     if (findUser) return await this.getJwtWithKakaoId(findUser.idx)
     const makeUser = await this.kakaoSave(req)
-    const stamp = await this.stampService.newUserMakeStamp(makeUser.idx)
     return await this.getJwtWithKakaoId(makeUser.idx)
   }
 

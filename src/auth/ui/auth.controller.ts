@@ -58,6 +58,6 @@ export class AuthController {
       expires: new Date(Date.now() + 86400e3),
       sameSite: 'lax',
     })
-    response.redirect('http://localhost:3000')
+    response.redirect('http://localhost:5173')
   }
 }
