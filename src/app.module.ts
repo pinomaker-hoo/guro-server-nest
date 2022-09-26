@@ -3,7 +3,8 @@ import { ConfigModule } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { AuthModule } from './auth/auth.module'
 import { typeORMConfig } from './config/typeorm.config'
-import { StampModule } from './stamp/stamp.module';
+import { StampModule } from './stamp/stamp.module'
+import { StampUserModule } from './stampUser/stampUser.module'
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { StampModule } from './stamp/stamp.module';
       isGlobal: true,
     }),
     StampModule,
+    StampUserModule,
   ],
   controllers: [],
   providers: [],

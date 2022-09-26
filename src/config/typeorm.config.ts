@@ -12,7 +12,7 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm'
 //   synchronize: true,
 // }
 export const typeORMConfig: TypeOrmModuleOptions = {
-  type: 'mysql', //Database 설정
+  type: 'mysql',
   host: '210.90.136.10',
   port: 3306,
   username: 'pino',

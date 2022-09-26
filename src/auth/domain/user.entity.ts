@@ -33,5 +33,5 @@ export class User extends BaseTimeEntity {
   email: string
 
   @OneToMany((type) => StampUser, (stampUser) => stampUser.user)
-  stampUser: StampUser[]
+  stampUser: StampUser
 }
