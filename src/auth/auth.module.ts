@@ -5,6 +5,7 @@ import { PassportModule } from '@nestjs/passport'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { AuthService } from './application/auth.service'
 import { UserRepository } from './infrastructure/auth.repository'
+import { JwtStrategy } from './passport/auth.jwt.strategy'
 import { KakaoStrategy } from './passport/auth.kakao.strategy'
 import { AuthController } from './ui/auth.controller'
 
@@ -24,7 +25,7 @@ import { AuthController } from './ui/auth.controller'
       }),
     }),
   ],
-  providers: [AuthService, KakaoStrategy],
+  providers: [AuthService, KakaoStrategy, JwtStrategy],
   controllers: [AuthController],
 })
 export class AuthModule {}
