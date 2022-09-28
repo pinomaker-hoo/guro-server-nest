@@ -18,3 +18,13 @@
 7. npm run start:dev
 
 ```
+
+### Project Start
+```
+API-DOCS 확인 방법
+
+1. SERVER START
+
+2. /api-docs 
+
+```
