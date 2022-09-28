@@ -7,7 +7,6 @@ import getRandomNumber from 'src/config/number'
 export const multerDiskOptions = {
   fileFilter: (request, file, callback) => {
     if (file.mimetype.match(/\/(jpg|jpeg|png)$/)) {
-      console.log(1)
       callback(null, true)
     } else {
       callback(
@@ -29,7 +28,10 @@ export const multerDiskOptions = {
       callback(null, uploadPath)
     },
     filename: (request, file, callback) => {
-      callback(null, `${Date.now()}${extname(file.originalname)}`)
+      callback(
+        null,
+        `${Date.now()}${getRandomNumber()}${extname(file.originalname)}`,
+      )
     },
   }),
   limits: {
