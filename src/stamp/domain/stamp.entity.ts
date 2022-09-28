@@ -1,5 +1,5 @@
 import { BaseTimeEntity } from 'src/common/baseTime.entity'
-import { StampUser } from 'src/stampUser/domain/stampUser.entity'
+import { StampUser } from 'src/stamp-user/domain/stampUser.entity'
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
 import { StampKind } from '../dto/stamp.kind.dto'
 

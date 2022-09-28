@@ -8,5 +8,6 @@ import { StampController } from './ui/stamp.controller'
   imports: [TypeOrmModule.forFeature([StampRepository])],
   providers: [StampService],
   controllers: [StampController],
+  exports: [StampService],
 })
 export class StampModule {}
