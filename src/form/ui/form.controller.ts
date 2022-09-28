@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   Post,
   Req,
   UploadedFiles,
@@ -9,8 +10,10 @@ import {
 } from '@nestjs/common'
 import { FilesInterceptor } from '@nestjs/platform-express'
 import { JwtGuard } from 'src/auth/passport/auth.jwt.guard'
+import { ApiResponse } from 'src/common/response'
 import { multerDiskOptions } from 'src/util/multerOption'
 import { FormService } from '../application/form.service'
+import { Form } from '../domain/form.entity'
 
 @Controller('form')
 export class FormController {
@@ -23,7 +26,11 @@ export class FormController {
     const { path } = files[0]
     const { number } = body
     const { user } = req
-    console.log(path, number, user)
-    return await this.formService.saveForm(user, path, number)
+    const form: Form = await this.formService.saveForm(user, path, number)
+    return ApiResponse.of({
+      data: form,
+      message: 'success find all most likes workbooks',
+      statusCode: 200,
+    })
   }
 }
