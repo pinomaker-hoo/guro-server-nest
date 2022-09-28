@@ -25,6 +25,6 @@ API-DOCS 확인 방법
 
 1. SERVER START
 
-2. /api-docs 
+2. /api-docs 접속
 
 ```
