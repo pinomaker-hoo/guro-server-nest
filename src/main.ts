@@ -18,4 +18,5 @@ async function bootstrap() {
   setupSwagger(app)
   await app.listen(process.env.NODE_SERVER_PORT)
 }
+
 bootstrap()
