@@ -17,6 +17,6 @@ export class StampUserController {
   @UseGuards(JwtGuard)
   async saveStamp(@Req() req, @Param('id') stampId: string) {
     const { user } = req
-    this.stampUserService.saveStamp(user, Number(stampId))
+    return this.stampUserService.saveStamp(user, Number(stampId))
   }
 }

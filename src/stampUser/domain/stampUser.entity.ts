@@ -8,9 +8,9 @@ export class StampUser extends BaseTimeEntity {
   @PrimaryGeneratedColumn()
   idx: number
 
-  @ManyToOne((type) => User, (user) => user.stampUser)
+  @ManyToOne((type) => User)
   user: User
 
-  @ManyToOne((type) => Stamp, (stamp) => stamp.stampUser)
+  @ManyToOne((type) => Stamp)
   stamp: Stamp
 }
