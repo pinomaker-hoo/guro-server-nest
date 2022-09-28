@@ -5,18 +5,18 @@ import { AuthModule } from './auth/auth.module'
 import { typeORMConfig } from './config/typeorm.config'
 import { FormModule } from './form/form.module'
 import { StampModule } from './stamp/stamp.module'
-import { StampUserModule } from './stampUser/stampUser.module'
+import { StampUserModule } from './stamp-user/stamp-user.module'
 
 @Module({
   imports: [
     AuthModule,
     FormModule,
+    StampModule,
+    StampUserModule,
     TypeOrmModule.forRoot(typeORMConfig),
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    StampModule,
-    StampUserModule,
   ],
   controllers: [],
   providers: [],
