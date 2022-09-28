@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger'
 import { User } from 'src/auth/domain/user.entity'
 import { BaseTimeEntity } from 'src/common/baseTime.entity'
 import { Stamp } from 'src/stamp/domain/stamp.entity'

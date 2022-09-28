@@ -9,7 +9,6 @@ import {
 } from '@nestjs/common'
 import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Response } from 'express'
-import { ApiResponse } from 'src/common/response'
 import { AuthService } from '../application/auth.service'
 import { User } from '../domain/user.entity'
 import { KakaoGuard } from '../passport/auth.kakao.guard'
@@ -18,16 +17,6 @@ import { KakaoGuard } from '../passport/auth.kakao.guard'
 @ApiTags('유저 API')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
-
-  @Get('check')
-  @ApiOperation({
-    summary: '서버 체크 API',
-    description: '서버가 열려있는 지 확인하는 API',
-  })
-  @ApiCreatedResponse({ description: 'SERVER ON!' })
-  async checkServer() {
-    return 'SERVER ON!'
-  }
 
   @Get('/kakao')
   @HttpCode(200)
