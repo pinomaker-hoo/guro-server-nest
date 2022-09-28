@@ -1,10 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { BaseTimeEntity } from 'src/common/baseTime.entity'
+import { Form } from 'src/form/domain/form.entity'
 import { StampUser } from 'src/stampUser/domain/stampUser.entity'
 import {
   Column,
   Entity,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm'
@@ -34,4 +36,7 @@ export class User extends BaseTimeEntity {
 
   @OneToMany((type) => StampUser, (stampUser) => stampUser.user)
   stampUser: StampUser
+
+  @OneToMany((type) => Form, (form) => form.user)
+  form: Form
 }
