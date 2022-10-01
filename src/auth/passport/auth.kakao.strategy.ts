@@ -18,7 +18,7 @@ export class KakaoStrategy extends PassportStrategy(Strategy) {
       email:
         kakao_account.has_email && !kakao_account.email_needs_agreement
           ? kakao_account.email
-          : null,
+          : 'null',
     }
     done(null, payload)
   }

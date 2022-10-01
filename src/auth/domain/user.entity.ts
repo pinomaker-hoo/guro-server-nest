@@ -29,7 +29,7 @@ export class User extends BaseTimeEntity {
   @ApiProperty({ description: 'user_kakaoId' })
   kakaoId: string
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', length: 255, nullable:true })
   @ApiProperty({ description: 'user_email' })
   email: string
 
