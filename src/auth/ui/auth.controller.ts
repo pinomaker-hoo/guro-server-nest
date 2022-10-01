@@ -50,6 +50,6 @@ export class AuthController {
     const token = await this.authService.login(req.user)
     const string = encodeURIComponent(token)
     const { referer } = req.headers
-    response.redirect(`${referer}test?token=${string}`)
+    response.redirect(`${referer}home?token=${string}`)
   }
 }
