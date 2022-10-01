@@ -50,7 +50,8 @@ export class AuthController {
     const token = await this.authService.login(req.user)
     response.cookie('accessToken', token, {
       expires: new Date(Date.now() + 86400e3),
-      sameSite: 'lax',
+      sameSite: 'none',
+      httpOnly: false,
     })
     response.redirect('http://localhost:3000/home')
   }
