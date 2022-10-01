@@ -54,6 +54,6 @@ export class AuthController {
       httpOnly: false,
       secure: true,
     })
-    response.redirect('http://localhost:3000/home')
+    response.redirect('www.budmap.co.kr/home')
   }
 }
