@@ -8,7 +8,7 @@ import {
   UseGuards,
 } from '@nestjs/common'
 import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger'
-import { Response } from 'express'
+import { Request, Response } from 'express'
 import { AuthService } from '../application/auth.service'
 import { User } from '../domain/user.entity'
 import { KakaoGuard } from '../passport/auth.kakao.guard'
@@ -49,6 +49,7 @@ export class AuthController {
   async kakaoLoginCallback(@Req() req, @Res() response: Response) {
     const token = await this.authService.login(req.user)
     const string = encodeURIComponent(token)
-    response.redirect(`http://localhost:3000/test?token=${string}`)
+    const { referer } = req.headers
+    response.redirect(`${referer}test?token=${string}`)
   }
 }
