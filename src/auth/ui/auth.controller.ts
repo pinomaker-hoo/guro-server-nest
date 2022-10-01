@@ -18,6 +18,11 @@ import { KakaoGuard } from '../passport/auth.kakao.guard'
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Get('/check')
+  async test() {
+    return 'Hello World'
+  }
+
   @Get('/kakao')
   @HttpCode(200)
   @UseGuards(KakaoGuard)
