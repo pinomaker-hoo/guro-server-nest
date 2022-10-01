@@ -55,6 +55,6 @@ export class AuthController {
       secure: true,
     })
     const string = encodeURIComponent(token)
-    response.redirect(`http://localhost:3000/?token=${string}`)
+    response.redirect(`https://budmap.co.kr/home/?token=${string}`)
   }
 }
