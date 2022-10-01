@@ -48,13 +48,7 @@ export class AuthController {
   })
   async kakaoLoginCallback(@Req() req, @Res() response: Response) {
     const token = await this.authService.login(req.user)
-    response.cookie('accessToken', token, {
-      expires: new Date(Date.now() + 86400e3),
-      sameSite: 'none',
-      httpOnly: false,
-      secure: true,
-    })
     const string = encodeURIComponent(token)
-    response.redirect(`https://budmap.co.kr/home/?token=${string}`)
+    response.redirect(`http://localhost:3000/test?token=${string}`)
   }
 }

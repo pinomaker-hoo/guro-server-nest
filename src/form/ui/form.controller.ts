@@ -33,6 +33,7 @@ export class FormController {
     const { path } = files[0]
     const { number } = body
     const { user } = req
+    // console.log(path, number, user)
     const form: Form = await this.formService.saveForm(user, path, number)
     return ApiResponse.of({
       data: form,
