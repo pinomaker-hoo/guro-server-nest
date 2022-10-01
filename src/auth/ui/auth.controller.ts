@@ -54,6 +54,6 @@ export class AuthController {
       httpOnly: false,
       secure: true,
     })
-    response.redirect('www.budmap.co.kr/home')
+    response.redirect('https://budmap.co.kr/home')
   }
 }
