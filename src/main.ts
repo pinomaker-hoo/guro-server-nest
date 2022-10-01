@@ -16,7 +16,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe())
   app.use(cookieParser())
   setupSwagger(app)
-  await app.listen(process.env.NODE_SERVER_PORT)
+  await app.listen(443 || 3000)
 }
 
 bootstrap()
