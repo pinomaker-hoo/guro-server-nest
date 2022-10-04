@@ -20,7 +20,7 @@ async function bootstrap() {
   Sentry.init({
     dsn: process.env.SENTRY_DSN,
   })
-  await app.listen(process.env.PORT || 3002)
+  await app.listen(process.env.NODE_SERVER_PORT || 8080)
 }
 
 bootstrap()
