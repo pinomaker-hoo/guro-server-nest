@@ -48,8 +48,11 @@ export class AuthController {
   })
   async kakaoLoginCallback(@Req() req, @Res() response: Response) {
     const token = await this.authService.login(req.user)
+    response.cookie('accesstoken', token)
     const string = encodeURIComponent(token)
-    const host = 'https://www.budmap.co.kr'
+    // const host = 'https://www.budmap.co.kr'
+    // const host = 'http://localhost:3000'
+    const host = 'https://candid-souffle-36c22e.netlify.app'
     response.redirect(`${host}/home?token=${string}`)
   }
 }
