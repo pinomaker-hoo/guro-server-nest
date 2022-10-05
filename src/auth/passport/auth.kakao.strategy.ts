@@ -5,7 +5,7 @@ export class KakaoStrategy extends PassportStrategy(Strategy) {
   constructor() {
     super({
       clientID: '35925e2699a55c7bffbb6e051da01a40',
-      callbackURL: 'https://pinodev.shop/auth/kakao/callback',
+      callbackURL: 'https://bud.pinodev.shop/auth/kakao/callback',
     })
   }
 
