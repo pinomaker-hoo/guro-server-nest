@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { BaseTimeEntity } from 'src/common/baseTime.entity'
-import { Form } from 'src/form/domain/form.entity'
 import { StampUser } from 'src/stamp-user/domain/stampUser.entity'
 import {
   Column,
@@ -29,12 +28,9 @@ export class User extends BaseTimeEntity {
   @ApiProperty({ description: 'user_kakaoId' })
   kakaoId: string
 
-  @Column({ type: 'varchar', length: 255, nullable:true })
+  @Column({ type: 'varchar', length: 255, nullable: true })
   @ApiProperty({ description: 'user_email' })
   email: string
-
-  @OneToMany((type) => Form, (form) => form.user)
-  form: Form[]
 
   @OneToMany((type) => StampUser, (stampUser) => stampUser.user)
   stampUser: StampUser[]

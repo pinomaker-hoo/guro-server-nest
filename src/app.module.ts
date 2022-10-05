@@ -2,14 +2,12 @@ import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { AuthModule } from './auth/auth.module'
-import { FormModule } from './form/form.module'
 import { StampModule } from './stamp/stamp.module'
 import { StampUserModule } from './stamp-user/stamp-user.module'
 
 @Module({
   imports: [
     AuthModule,
-    FormModule,
     StampModule,
     StampUserModule,
     ConfigModule.forRoot({
