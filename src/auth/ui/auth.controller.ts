@@ -50,8 +50,7 @@ export class AuthController {
     const token = await this.authService.login(req.user)
     response.cookie('accesstoken', token)
     const string = encodeURIComponent(token)
-    // const host = 'https://www.budmap.co.kr'
-    const host = 'http://localhost:3000'
+    const host = 'https://www.budmap.co.kr'
     response.redirect(`${host}/home?token=${string}`)
   }
 }
